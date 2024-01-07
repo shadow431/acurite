@@ -1,5 +1,8 @@
 FROM ubuntu:latest
 
+ENV DEVICE_PROTOS=40
+ENV DEVICE_ID=0
+
 RUN apt update  && \
     apt install -y git libtool libusb-1.0.0-dev librtlsdr-dev rtl-sdr build-essential autoconf cmake pkg-config swig
 RUN git clone https://github.com/osmocom/rtl-sdr/ && \
@@ -19,5 +22,13 @@ RUN git clone https://github.com/merbanan/rtl_433.git && \
     make install && \
     ldconfig
 
-CMD [ "rtl_433","-v", "-R", "40", "-F", "syslog:sdr_relay:1433" ] # 40 is the device ID for the Acurite 5n1 just print it out and see what it is and send it to the relay
-#CMD [ "rtl_433","-v", "-R", "40" ] # 40 is the device ID for the Acurite 5n1 just print it out and see what it is
+COPY ./launch.sh /
+
+RUN chmod a+x /launch.sh
+
+CMD ["sh", "/launch.sh"]
+
+#CMD [ "rtl_433","-v", "-R", "40", "-F", "syslog:sdr_relay:1433" ] # 40 is the device ID for the Acurite 5n1 just print it out and see what it is and send it to the relay
+#CMD [ "rtl_433","-v", "-R", "40", "-d", "0", "-F", "syslog:sdr_relay:1433" ] # 40 is the device ID for the Acurite 5n1 just print it out and see what it is and send it to the relay
+#CMD [ "rtl_433","-v", "-f", "433.92M", "-f", "915M", "-H", "120", "-F", "syslog:sdr_relay:1433", "-F", "log", "-F", "kv" ] # 40 is the device ID for the Acurite 5n1 just print it out and see what it is and send it to the relay
+#CMD [ "rtl_433","-v", "-R", "40", "-F"  ] # 40 is the device ID for the Acurite 5n1 just print it out and see what it is

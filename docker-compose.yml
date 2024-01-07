@@ -1,5 +1,5 @@
 services:
-  sdr:
+  sdr-acurite:
     build:
       context: .
       dockerfile: Dockerfile.rtl433
@@ -7,10 +7,29 @@ services:
       - "/dev/bus/usb"
     depends_on:
       - sdr_relay
+    restart: always
+    environment:
+      - DEVICE_ID=0
+      - DEVICE_PROTOS=40
+#  sdr-ambient-weather:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.rtl433
+#    devices:
+#      - "/dev/bus/usb"
+#    depends_on:
+#      - sdr_relay
+#    restart: always
+#    environment:
+#      - DEVICE_PROTOS=113
+#      - DEVICE_ID=1
+#      - FREQUENCY=915M
+
   sdr_relay:
     build:
       context: .
       dockerfile: Dockerfile.graphite_relay
+    restart: always
     ports:
       - "1433:1433"
     environment:
