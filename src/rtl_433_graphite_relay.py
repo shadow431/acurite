@@ -75,7 +75,7 @@ def rtl_433_probe():
     graphite = GraphiteTcpClient(host=GRAPHITE_HOST,
                                  port=GRAPHITE_PORT)
     
-    data_types = ["humidity", "battery_ok", "wind_avg_km_h", "wind_dir_deg", "temperature_F","temperature_C","rain_in"]
+    data_types = ["humidity", "battery_ok", "wind_avg_km_h", "wind_dir_deg", "temperature_F","temperature_C","rain_in","rain_mm","battery_V","pressure_hPa","battery_mV","wind_avg_m_s","wind_max_m_s","uvi","light_lux","strike_count"]
 
     while True:
         line, addr = sock.recvfrom(1024)
