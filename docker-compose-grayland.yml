@@ -1,0 +1,39 @@
+services:
+#  sdr-acurite:
+#    image: mirror.allcomputergeek.net/allgeek_rtlsdr:latest
+#    #build:
+#    #  context: .
+#    #  dockerfile: Dockerfile.rtl433
+#    devices:
+#      - "/dev/bus/usb"
+#    depends_on:
+#      - sdr_relay
+#    restart: always
+#    environment:
+#      - DEVICE_ID=0
+#      - DEVICE_PROTOS=228
+  sdr-ambient-weather:
+    build:
+      context: .
+      dockerfile: Dockerfile.rtl433
+    devices:
+      - "/dev/bus/usb"
+    depends_on:
+      - sdr_relay
+    restart: always
+    environment:
+      #- DEVICE_PROTOS=113 20 112 120 190
+      - DEVICE_ID=1
+      - FREQUENCY=915M
+  sdr_relay:
+    #image: mirror.allcomputergeek.net/allgeek_rtl_graphite_relay:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.graphite_relay
+    restart: always
+    ports:
+      - "1433:1433"
+    environment:
+      - GRAPHITE_HOST=${GRAPHITE_HOST}
+      - GRAPHITE_PORT=${GRAPHITE_PORT}
+      - GRAPHITE_PREFIX=${GRAPHITE_PREFIX}
