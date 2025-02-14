@@ -27,6 +27,7 @@ done
 
 echo "R Values: ${r_values}"
 echo "Device ID: ${DEVICE_ID}"
+echo "Frequencys: ${f_values}"
 
 #rtl_433 -Y classic -s 250k -v ${f_values} ${r_values} -d ${DEVICE_ID} -F syslog:sdr_relay:1433 -F log
 #rtl_433 -Y classic -s 250k -v ${f_values} ${r_values} -F syslog:sdr_relay:1433 -F log
